@@ -21,10 +21,10 @@ class MyApp extends ConsumerWidget {
       darkTheme: darkTheme,
       themeMode: themeMode,
 
-      // home: const HomeScreen(),
+      home: const HomeScreen(),
       // home: const LoginScreen(),
       // home: const DailyLogScreen(),
-      home: const InsightsScreen(),
+      // home: const InsightsScreen(),
     );
   }
 }
