@@ -1,6 +1,7 @@
 import 'package:bloomlog/screens/daily_log_screen.dart';
 import 'package:bloomlog/screens/insights_screen.dart';
 import 'package:bloomlog/screens/login_screen.dart';
+import 'package:bloomlog/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'theme/theme.dart';
@@ -21,10 +22,11 @@ class MyApp extends ConsumerWidget {
       darkTheme: darkTheme,
       themeMode: themeMode,
 
-      home: const HomeScreen(),
+      // home: const HomeScreen(),
       // home: const LoginScreen(),
       // home: const DailyLogScreen(),
       // home: const InsightsScreen(),
+      home: SettingsScreen(),
     );
   }
 }
