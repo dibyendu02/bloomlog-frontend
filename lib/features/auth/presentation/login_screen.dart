@@ -1,6 +1,7 @@
+import 'package:bloomlog/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../theme/theme_provider.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
@@ -14,6 +15,10 @@ class LoginScreen extends ConsumerWidget {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: const Text('Bloomlog'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.go('/'),
+        ),
         actions: [
           IconButton(
             icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
@@ -75,7 +80,13 @@ class LoginScreen extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                // Simulate successful login and navigate to home
+                context.go('/');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Login successful!')),
+                );
+              },
               child: const Text('Sign In'),
             ),
             const SizedBox(height: 10),
@@ -83,14 +94,26 @@ class LoginScreen extends ConsumerWidget {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Sign up feature coming soon!'),
+                        ),
+                      );
+                    },
                     child: const Center(child: Text('Sign Up')),
                   ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Social login coming soon!'),
+                        ),
+                      );
+                    },
                     child: const Center(
                       child: Text(
                         'Continue with Social',

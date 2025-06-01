@@ -1,7 +1,8 @@
+import 'package:bloomlog/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../theme/theme_provider.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:go_router/go_router.dart';
 
 class InsightsScreen extends ConsumerWidget {
   const InsightsScreen({super.key});
@@ -12,9 +13,17 @@ class InsightsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.go('/'),
+        ),
         title: const Text("Insights"),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () => context.go('/daily-log'),
+            tooltip: 'Add New Entry',
+          ),
           IconButton(
             icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
             onPressed: () {
@@ -27,6 +36,46 @@ class InsightsScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
+          // Quick actions
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton.icon(
+                  onPressed: () => context.go('/daily-log'),
+                  icon: const Icon(Icons.add),
+                  label: const Text('New Entry'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.greenAccent[400],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Export feature coming soon!'),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.download),
+                  label: const Text('Export'),
+                  style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 24),
+
           const Text(
             'Reflections',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -39,6 +88,30 @@ class InsightsScreen extends ConsumerWidget {
               image: const DecorationImage(
                 image: AssetImage('assets/images/reflection_placeholder.png'),
                 fit: BoxFit.cover,
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
+                ),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    'Your journey of self-discovery\ncontinues...',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
@@ -163,6 +236,42 @@ class InsightsScreen extends ConsumerWidget {
               Text("6"),
               Text("7"),
             ],
+          ),
+
+          const SizedBox(height: 24),
+
+          // Summary card
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Quick Summary',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    '• Your mood has been trending upward this week\n'
+                    '• Most productive days: Wednesday & Friday\n'
+                    '• Consider adding more entries for better insights',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  const SizedBox(height: 12),
+                  ElevatedButton(
+                    onPressed: () => context.go('/daily-log'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.greenAccent[400],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text('Add Today\'s Entry'),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
