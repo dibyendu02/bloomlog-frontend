@@ -1,8 +1,10 @@
+// lib/app.dart
+import 'package:bloomlog/app_initializer/app_initializer.dart';
 import 'package:bloomlog/core/router/app_router.dart';
+import 'package:bloomlog/theme/theme.dart';
+import 'package:bloomlog/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'theme/theme.dart';
-import 'theme/theme_provider.dart';
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
@@ -11,13 +13,15 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeModeProvider);
 
-    return MaterialApp.router(
-      title: 'Bloomlog',
-      theme: lightTheme,
-      debugShowCheckedModeBanner: false,
-      darkTheme: darkTheme,
-      themeMode: themeMode,
-      routerConfig: appRouter,
+    return AppInitializer(
+      child: MaterialApp.router(
+        title: 'Bloomlog',
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        debugShowCheckedModeBanner: false,
+        themeMode: themeMode,
+        routerConfig: appRouter,
+      ),
     );
   }
 }

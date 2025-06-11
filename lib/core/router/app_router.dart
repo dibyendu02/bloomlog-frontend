@@ -1,13 +1,18 @@
-import 'package:bloomlog/features/auth/presentation/login_screen.dart';
+// lib/core/router/app_router.dart
 import 'package:bloomlog/features/daily_log/presentation/daily_log_screen.dart';
 import 'package:bloomlog/features/home/presentation/home_screen.dart';
 import 'package:bloomlog/features/insights/presentation/insights_screen.dart';
-
+import 'package:bloomlog/features/login/presentation/views/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'route_tracker.dart';
+
+final GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: '/',
+  navigatorKey: appNavigatorKey,
+  initialLocation: '/login',
+  observers: [RouteTracker()],
   routes: [
     GoRoute(
       path: '/',
@@ -31,5 +36,6 @@ final GoRouter appRouter = GoRouter(
     ),
   ],
   errorBuilder:
-      (context, state) => Scaffold(body: Center(child: Text('Page not found'))),
+      (context, state) =>
+          const Scaffold(body: Center(child: Text('Page not found'))),
 );

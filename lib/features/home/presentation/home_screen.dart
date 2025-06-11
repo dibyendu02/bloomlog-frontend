@@ -1,3 +1,4 @@
+import 'package:bloomlog/common/view/provider/global_auth_provider.dart';
 import 'package:bloomlog/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,6 +11,7 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeModeProvider);
     final isDark = themeMode == ThemeMode.dark;
+    final authState = ref.watch(globalAuthViewModelProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -58,7 +60,6 @@ class HomeScreen extends ConsumerWidget {
 
             const SizedBox(height: 30),
 
-            // Navigation buttons
             ElevatedButton.icon(
               onPressed: () => context.go('/daily-log'),
               icon: const Icon(Icons.edit),
@@ -88,10 +89,30 @@ class HomeScreen extends ConsumerWidget {
 
             const Spacer(),
 
-            TextButton(
-              onPressed: () => context.go('/login'),
-              child: const Text('Go to Login'),
-            ),
+            // 🔥 THIS IS THE RELEVANT PART 🔥
+            authState.isAuthenticated
+                ? Column(
+                  children: [
+                    const Text(
+                      'Logged in as:',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      authState.user?.name ?? 'User',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                )
+                : TextButton(
+                  onPressed: () => context.go('/login'),
+                  child: const Text('Go to Login'),
+                ),
           ],
         ),
       ),
